@@ -140,7 +140,7 @@ module.exports.scrapeBus = function (busId, day, rv) {
             const URL = buildUrl(baseUrl, {
                 queryParams: {
                     'rv': rv,
-                    'vaziod': queryData.vaziod[queryData.vaziod.length - 1],
+                    'vaziod': queryData.vaziod,
                     'dan': queryData.dan.includes(day) ? day : 'R',
                     'linija%5B%5D': busId
                 }
@@ -150,10 +150,9 @@ module.exports.scrapeBus = function (busId, day, rv) {
             request(URL, (err, resp, html) => {
                 if (err) return reject(err);
                 const $ = cheerio.load(html);
-
-                if ($('td > b').length == 0) {
-                    return reject(({'message': `Error while getting bus schedule, double check bus lane number.`}));
-                }
+                // if ($('td > b').length == 0) {
+                //     return reject(({'message': `Error while getting bus schedule, double check bus lane number.`}));
+                // }
 
 
                 if ($('tbody > tr > th').length == 2) {
